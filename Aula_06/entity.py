@@ -14,7 +14,7 @@ class Aluno:
     def get_matricula(self):
         return self.__matricula
     def ano_ingresso(self):
-        return int(self.__matricula[:4])
+        return int(self.__matricula[:4]) 
     
 class UI:
     def main():
