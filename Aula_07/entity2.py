@@ -31,15 +31,49 @@ class Circulo:
 
 class Viagem:
     def __init__(self):
-        self.__distancia = 0
-        self.__tempo = 0
+        self.__distancia = 0.0
+        self.__tempo = 0.0
     def set_distancia(self, d):
-        if d>=0: self.__d = d
+        if d>=0: self.__distancia = d
+        else: raise ValueError()
     def get_distancia(self):
-    def set_tempo(self, t);
+        return self.__distancia
+    def set_tempo(self, t):
+        if t>0: self.__tempo = t
+        else: raise ValueError()
     def get_tempo(self):
-    def velocidade_media():
+        return self.__tempo
+    def velocidade_media(self):
+        return self.__distancia / self.__tempo
     
+class Banco:
+    def __init__(self):
+        self.__titular = ""
+        self.__numero = 0
+        self.__saldo = 0.0
+    def set_titular(self, nome):
+        if nome != "": self.__titular = nome
+        else: raise ValueError()
+    def set_numero(self, num):
+        if num>0: self.__numero = num
+        else: raise ValueError()
+    def set_saldo(self, valor):
+        if valor >=0: self.__saldo = valor
+        else: raise ValueError()
+    def get_titular(self):
+        return self.__titular
+    def get_numero(self):
+        return self.__numero
+    def get_saldo(self):
+        return self.__saldo
+    def depositar(self, valor):
+        if valor>0:
+            self.__saldo +=valor
+        else: raise ValueError()
+    def sacar(self, valor):
+        if valor>0 and valor<=self.__saldo:
+            self.__saldo -= valor
+        else: raise ValueError()
     
 #INTERFACE COM O USUÁRIO
 class UI:
@@ -50,8 +84,8 @@ class UI:
             op = UI.menu
             if op == 1: UI.triangulo()
             if op == 2:UI.circulo()
-            if op == 3:UI.circulo()
-            if op == 4:UI.circulo()
+            if op == 3:UI.viagem()
+            if op == 4:UI.conta()
             if op == 5:UI.circulo()
             if op == 9:UI.circulo()
     @staticmethod
@@ -75,7 +109,18 @@ class UI:
         area = x.calc_area()
         circunferencia = x.calc_circunferencia()
         print(f"Um círculo de raio{x.get_raio} tem área = {area} e circunferencia = {circunferencia}")
+    @staticmethod
     def viagem():
-        print("Em desenvolvimento")
-
+        print("Cálculo da velocidade média de uma viagem")
+        x = Viagem()
+        x.set_distancia(float(input("Digite a distância em km: ")))
+        x.set_tempo(float(input("Digite o tempo em horas (1h30 = 1.5):")))
+        v = x.velocidade_media()
+        print(f"A velocidade média foi de {v:.2f} km/h")
+    @staticmethod
+    def conta():
+        print("Operações de Conta Bancária")
+        x= Banco()
+        x.set_titular(input("Nome do titular: "))
+        x.set_numero(int(input("")))
 UI.main()
