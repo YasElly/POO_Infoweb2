@@ -1,4 +1,5 @@
 #ENTIDADE
+import math
 class Triangulo:
     def __init__(self):
         self.__b =0
@@ -24,9 +25,9 @@ class Circulo:
         else: raise ValueError()
     def get_raio(self):
         return self.__r
-    def calc_area(self, r, math):
+    def calc_area(self):
         return math.pi * self.__r**2
-    def calc_circunferencia(self, r, math):
+    def calc_circunferencia(self):
         return 2 * math.pi * self.__r
 
 class Viagem:
@@ -75,31 +76,62 @@ class Banco:
             self.__saldo -= valor
         else: raise ValueError()
     
+class Cinema:
+    def __init__(self):
+        self.__d = ""
+        self.__h = 0
+        self.base = 0
+        self.ingresso = 0
+    def set_dia(self, v):
+        if v in ['segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'domingo']:
+            self.__d = v
+        else: raise ValueError("Dia da semana inválido")
+    def set_hora(self, v):
+        if v<=23: self.__h = v
+        else: raise ValueError()
+    def get_dia(self):
+        return self.__d
+    def get_hora(self):
+        return self.__h
+    def calc_ingresso(self):
+        if self.__d == 'quarta':
+            return 8
+        if self.__d in ['segunda', 'terça', 'quinta']:
+            base = 16
+        else:
+            base = 20
+        if self.__h >=17:
+            return base *1.5
+        else:
+            return base
+    
 #INTERFACE COM O USUÁRIO
 class UI:
     @staticmethod
     def main():
         op = 0
         while op != 9:
-            op = UI.menu
+            op = UI.menu()
             if op == 1: UI.triangulo()
             if op == 2:UI.circulo()
             if op == 3:UI.viagem()
             if op == 4:UI.conta()
-            if op == 5:UI.circulo()
+            if op == 5:UI.cinema()
             if op == 9:UI.circulo()
     @staticmethod
     def menu():  
         print("1-Triangulo 2-Círculo 3-Viagem 4- Conta Bancaria 5-Ingresso 9-Fim")
         op=int(input("Escolha uma opção: "))
+        if op == 9:
+            print("Programa Finalizado. Tchau :)")
         return op
     @staticmethod
     def triangulo():
-        print("Cálculo da área de um triãngulo")
+        print("Cálculo da área de um triângulo")
         x = Triangulo()
         x.set_base(float(input("Informe o valor da base:")))
         x.set_altura(float(input("Informe o valor da altura:")))
-        area = x.calc
+        area = x.calc_area()
         print(f"Um triângulo com a base {x.get_base()} e altura{x.get_altura()} tem área = {area}")
     @staticmethod
     def circulo():
@@ -108,7 +140,7 @@ class UI:
         x.set_raio(float(input("Digite o valor do raio: ")))
         area = x.calc_area()
         circunferencia = x.calc_circunferencia()
-        print(f"Um círculo de raio{x.get_raio} tem área = {area} e circunferencia = {circunferencia}")
+        print(f"Um círculo de raio {x.get_raio()} tem área = {area} e circunferencia = {circunferencia}")
     @staticmethod
     def viagem():
         print("Cálculo da velocidade média de uma viagem")
@@ -122,5 +154,23 @@ class UI:
         print("Operações de Conta Bancária")
         x= Banco()
         x.set_titular(input("Nome do titular: "))
-        x.set_numero(int(input("")))
+        x.set_numero(int(input("Número da conta: ")))
+        print(f"Conta criada! Saldo atual: {x.get_saldo()}")
+        op = int(input("1-Depositar 2-Sacar: "))
+        if op==1:
+            valor=float(input("Valor do deposito: "))
+            x.depositar(valor)
+        elif op==2:
+            valor=float(input("Valor do saque: "))
+            x.sacar(valor)
+        print(f"Saldo atual: {x.get_saldo()}")
+    @staticmethod
+    def cinema():
+        print("Operações de Compra de Ingressos")
+        x= Cinema()
+        x.set_dia(input('Dia da semana da sessão: ').lower())
+        x.set_hora(int(input('Horário (0-23): ')))
+        print(f"Dia da sessão: {x.get_dia()}")
+        print(f"Horário: {x.get_hora()}")
+        print(f"Valor do Ingresso: {x.calc_ingresso():.0f},00")
 UI.main()
