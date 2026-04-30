@@ -1,16 +1,16 @@
 class Viagem:
     def __init__(self, dest, dist, lit):
-        self.set_destino(dest) = ""
-        self.set_distancia(dist) = 0.0
-        self.set_litros(lit) = 0.0
-    def set_destino(self, dest):
-        if dest != "": self.__destino = dest
+        self.set_destino(dest)
+        self.set_distancia(dist)
+        self.set_litros(lit)
+    def set_destino(self, nome):
+        if nome != "": self.__destino = nome
         else: raise ValueError()
-    def set_distancia(self, dist):
-        if dist >= 0: self.__distancia = dist
+    def set_distancia(self, d):
+        if d >= 0: self.__distancia = d
         else: raise ValueError()
-    def set_litros(self, lit):
-        if lit >= 0: self.__litros = lit
+    def set_litros(self, l):
+        if l >= 0: self.__litros = l
         else: raise ValueError()
     def get_destino(self):
         return self.__destino
@@ -18,11 +18,13 @@ class Viagem:
         return self.__distancia
     def get_litros(self):
         return self.__litros
-    def Consumo(self):
-        return self.__distancia/self.__litros
+    def consumo(self):
+        return self.__distancia / self.__litros
     def __str__(self):
-        return (f"Destino:{self.get_destino}")
-
+        return (f"Destino:{self.__destino}\n"
+                f"Distância: {self.__distancia} km\n"
+                f"Litros: {self.__litros}L\n"
+                f"Consumo: {self.consumo()} km/L")
     
 class ViagemUI:
     @staticmethod
@@ -35,12 +37,16 @@ class ViagemUI:
     @staticmethod
     def menu():  
         print("1-Calcular 2-Fim")
-        return int(input("Escolha uma opção: "))
+        op = int(input("Escolha uma opção: "))
+        return op
+    
     @staticmethod
     def calculo():
+        print("Cálculo do consumo de combustível em uma viagem")
         dest = input("Qual o destino da viagem?")
         dist = float(input("Qual a distância percorrida em km?"))
         lit = float(input("Quantos litros de combustível foram gastos?"))
         x = Viagem(dest, dist, lit)
+        print(x)
 
 ViagemUI.main()
