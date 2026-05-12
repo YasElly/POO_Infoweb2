@@ -11,7 +11,7 @@ class PlayList:
         if len(nome) == 0: raise ValueError('O nome não pode ser vazio')
         self.__nome = nome
     def set_descricao(self, descricao):
-        if len(descricao) == 0: raise ValueError('')
+        if len(descricao) == 0: raise ValueError()
         self.__descricao = descricao
     def get_id(self): return self.__id
     def get_nome(self): return self.__nome
