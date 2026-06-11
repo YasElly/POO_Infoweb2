@@ -28,27 +28,24 @@ class Treino:
     def pace(self):
         pace = self.__tempo/self.__distancia
         return self.pace
-
-#x = Paciente(1, "Eduardo", "09808909812", "84900090909", datetime(1990, 10, 5))
-#print(x)
-#print(x.idade())    
-class PacienteUI:
-    __pacientes = []  # atributo - fora do init - não tem objetos de PacienteUI
-    @staticmethod     # quando não acessa o atributo
+      
+class TreinoUI:
+    __treinos = [] 
+    @staticmethod
     def main():
         op = 0
         while op != 9:
-            op = PacienteUI.menu()
-            if op == 1: PacienteUI.inserir()
-            if op == 2: PacienteUI.listar()
-            if op == 3: PacienteUI.atualizar()
-            if op == 4: PacienteUI.excluir()
-            if op == 5: PacienteUI.pesquisar()
-            if op == 6: PacienteUI.aniversariantes() 
+            op = TreinoUI.menu()
+            if op == 1: TreinoUI.inserir()
+            if op == 2: TreinoUI.listar()
+            if op == 3: TreinoUI.listar_id()
+            if op == 4: TreinoUI.atualizar()
+            if op == 5: TreinoUI.excluir()
+            if op == 6: TreinoUI.mais_rapido() 
 
     @staticmethod
     def menu():
-        print("1-Inserir, 2-Listar, 3-Atualizar, 4-Excluir, 5-Pesquisar, 6-Aniversariantes, 9-Fim")
+        print("1-Inserir, 2-Listar, 3-Listar ID, 4- Atualizar, 5-Excluir, 6-Mais Rápido, 9-Fim")
         return int(input("Escolha uma opção: "))
     
     @classmethod      # quando acessa o atributo - usa o cls
@@ -65,7 +62,13 @@ class PacienteUI:
     def listar(cls):
         if len(cls.__pacientes) == 0: print("Nenhum paciente cadastrado")
         else:
-            for x in cls.__pacientes: print(x, x.idade())
+            for x in cls.__pacientes: print(x)
+
+    @classmethod
+    def listar_id(cls):
+        if len(cls.__treinos) == 0: print("Nenhum treino cadastrado")
+        else:
+            for x in cls.__treinos: print(x, x.)
 
     @classmethod
     def atualizar(cls):
@@ -80,3 +83,11 @@ class PacienteUI:
                     x.set_cpf(cpf)
                     x.set_fone(fone)
                     x.set_nascimento(nasc)
+
+    @classmethod
+    def excluir(cls):
+        pass
+
+    @classmethod
+    def mais_rapido(cls):
+        pass
