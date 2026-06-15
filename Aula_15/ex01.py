@@ -68,7 +68,7 @@ class TreinoUI:
     def listar_id(cls):
         if len(cls.__treinos) == 0: print("Nenhum treino cadastrado")
         else:
-            for x in cls.__treinos: print(x, x.)
+            for x in cls.__treinos: print(x)
 
     @classmethod
     def atualizar(cls):
