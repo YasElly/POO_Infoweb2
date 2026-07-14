@@ -7,8 +7,13 @@ class ClienteDAO:
         self.__objetos = []
         self.__abrir()
     def inserir(self, obj):
+        maior = 0
+        for cliente in self.__objetos:
+            if cliente.get_id() > maior:
+                maior = cliente.get_id()
+        obj.set_id(maior + 1)
         self.__objetos.append(obj)
-        self.__salvar
+        self.__salvar()
     def listar(self):
         return self.__objetos
     def listar_id(self, id):
@@ -21,11 +26,17 @@ class ClienteDAO:
             self.__objetos.remove(aux)
             self.__objetos.append(obj)
             self.__salvar()
+    def listar_nome(self, nome):
+        lista = []
+        for obj in self.__objetos:
+            if obj.get_nome().lower().startswith(nome.lower()):
+                lista.append(obj)
+        return lista
     def excluir(self, id):
         aux = self.listar_id(id)
         if aux !=None:
             self.__objetos.remove(aux)
-            self.__salvar
+            self.__salvar()
     def __abrir(self):
         try:
             arquivo = open(self.__arquivo, mode = "r")

@@ -12,8 +12,8 @@ class Service:
 
     #CLIENTE
     @staticmethod
-    def cliente_inserir(id, nome, email, fone):
-        obj = Cliente(id, nome, email, fone)
+    def cliente_inserir(nome, email, fone):
+        obj = Cliente(1, nome, email, fone)
         Service.__clienteDAO.inserir(obj)
 
     @staticmethod
@@ -23,6 +23,10 @@ class Service:
     @staticmethod
     def cliente_listar_id(id):
         return Service.__clienteDAO.listar_id(id)
+    
+    @staticmethod
+    def cliente_listar_nome(nome):
+        return Service.__clienteDAO.listar_nome(nome)
 
     @staticmethod
     def cliente_atualizar(id, nome, email, fone):
@@ -35,8 +39,8 @@ class Service:
 
     #SERVIÇO
     @staticmethod
-    def servico_inserir(id, descricao, valor):
-        obj = Servico(id, descricao, valor)
+    def servico_inserir(descricao, valor):
+        obj = Servico(1, descricao, valor)
         Service.__servicoDAO.inserir(obj)
 
     @staticmethod
@@ -46,6 +50,10 @@ class Service:
     @staticmethod
     def servico_listar_id(id):
         return Service.__servicoDAO.listar_id(id)
+
+    @staticmethod
+    def servico_listar_descricao(descricao):
+        return Service.__servicoDAO.listar_descricao(descricao)
 
     @staticmethod
     def servico_atualizar(id, descricao, valor):

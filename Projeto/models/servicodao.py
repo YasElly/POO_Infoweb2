@@ -8,8 +8,11 @@ class ServicoDAO:
         self.__abrir()
 
     def inserir(self, obj):
-        self.__objetos.append(obj)
-        self.__salvar()
+        maior = 0
+        for servico in self.__objetos:
+            if servico.get_id() > maior:
+                maior = servico.get_id()
+                obj.set_id(maior + 1)
 
     def listar(self): return self.__objetos
 
@@ -18,6 +21,13 @@ class ServicoDAO:
             if obj.get_id() == id:
                 return obj
         return None
+    
+    def listar_descricao(self, descricao):
+        lista = []
+        for obj in self.__objetos:
+            if obj.get_descricao().lower().startswith(descricao.lower()):
+                lista.append(obj)
+        return lista
 
     def atualizar(self, obj):
         aux = self.listar_id(obj.get_id())

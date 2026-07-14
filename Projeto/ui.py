@@ -7,42 +7,52 @@ class UI:
         print("2 - Listar Clientes")
         print("3 - Atualizar Cliente")
         print("4 - Excluir Cliente")
+        print("5 - Pesquisar Cliente por Nome")
         print("----------------------")
-        print("5 - Inserir Serviço")
-        print("6 - Listar Serviços")
-        print("7 - Atualizar Serviço")
-        print("8 - Excluir Serviço")
+        print("6 - Inserir Serviço")
+        print("7 - Listar Serviços")
+        print("8 - Atualizar Serviço")
+        print("9 - Excluir Serviço")
+        print("10 - Pesquisar Serviço por Descrição")
         print("----------------------")
-        print("9 - Fim")
+        print("11 - Fim")
         return int(input("Informe uma opção: "))
 
     @staticmethod
     def main():
         op = 0
-        while op != 9:
+        while op != 11:
             op = UI.menu()
             if op == 1: UI.cliente_inserir()
             if op == 2: UI.cliente_listar()
             if op == 3: UI.cliente_atualizar()
             if op == 4: UI.cliente_excluir()
+            if op == 5: UI.cliente_listar_nome()
             if op == 5: UI.servico_inserir()
-            if op == 6: UI.servico_listar()
-            if op == 7: UI.servico_atualizar()
-            if op == 8: UI.servico_excluir()
+            if op == 7: UI.servico_listar()
+            if op == 8: UI.servico_atualizar()
+            if op == 9: UI.servico_excluir()
+            if op == 10: UI.servico_listar_descricao()
 
     # CLIENTES
     @staticmethod
     def cliente_inserir():
-        id = int(input("Informe o id: "))
         nome = input("Informe o nome: ")
         email = input("Informe o e-mail: ")
         fone = input("Informe o telefone: ")
 
-        Service.cliente_inserir(id, nome, email, fone)
+        Service.cliente_inserir(nome, email, fone)
 
     @staticmethod
     def cliente_listar():
         for obj in Service.cliente_listar():
+            print(obj)
+
+    @staticmethod
+    def cliente_listar_nome():
+        nome = input("Informe o início do nome: ")
+
+        for obj in Service.cliente_listar_nome(nome):
             print(obj)
 
     @staticmethod
@@ -69,15 +79,21 @@ class UI:
     # SERVIÇOS
     @staticmethod
     def servico_inserir():
-        id = int(input("Informe o id: "))
         descricao = input("Informe a descrição: ")
         valor = float(input("Informe o valor: "))
 
-        Service.servico_inserir(id, descricao, valor)
+        Service.servico_inserir(descricao, valor)
 
     @staticmethod
     def servico_listar():
         for obj in Service.servico_listar():
+            print(obj)
+
+    @staticmethod
+    def servico_listar_descricao():
+        descricao = input("Informe o início da descrição: ")
+
+        for obj in Service.servico_listar_descricao(descricao):
             print(obj)
 
     @staticmethod
