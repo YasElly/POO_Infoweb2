@@ -27,7 +27,7 @@ class Profissional:
         return f"{self.__id} - {self.__nome} - {self.__email} - {self.__especialidade}"
    
     def to_json(self):
-        return { "id":self.__id, "nome":self.__nome, "email":self.__email, "fone":self.__especialidade }
+        return { "id":self.__id, "nome":self.__nome, "email":self.__email, "especialidade":self.__especialidade }
    
     @staticmethod
     def from_json(dic):

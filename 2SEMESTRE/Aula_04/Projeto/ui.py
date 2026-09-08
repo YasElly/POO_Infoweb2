@@ -14,6 +14,15 @@ class UI:
             if op == 6: UI.servico_listar()
             if op == 7: UI.servico_atualizar()
             if op == 8: UI.servico_excluir()
+            if op == 9: UI.horario_listar()
+            if op == 10: UI.horario_atualizar()
+            if op == 11: UI.horario_excluir()
+            if op == 12: UI.profissional_inserir()
+            if op == 13: UI.profissional_listar()
+            if op == 14: UI.profissional_listar_id()
+            if op == 15: UI.profissional_atualizar()
+            if op == 16: UI.profissional.excluir()
+
 
     @staticmethod
     def menu():
@@ -21,8 +30,11 @@ class UI:
         print("1-Inserir, 2-Listar, 3-Atualizar, 4-Excluir")
         print("Serviços ----------------------------------")
         print("5-Inserir, 6-Listar, 7-Atualizar, 8-Excluir")
-        print("Outras opções -----------------------------")
-        print("9-Fim")
+        print("Horários ----------------------------------")
+        print("9-Listar , 10-Atualizar, 11-Excluir")
+        print("Profissionais ----------------------------------")
+        print("12-Inserir, 13-Listar, 14-Atualizar, 15-Excluir")
+        print("16-Fim")
         return int(input("Informe uma opção: "))
 
     @staticmethod
@@ -76,5 +88,32 @@ class UI:
         for obj in Service().servico_listar(): print(obj)
         id = int(input("Informe o id do serviço a ser excluído: "))
         Service.servico_excluir(id)
+
+    @staticmethod
+    def horario_inserir():
+        data = input("Informe a data: ")
+        confirmado = input("Confirmado: ")
+        id_cliente = input("Informe o id do cliente: ")
+        id_servico = input("Informe o id do serviço: ")
+        id_profissional = input("Informe o id do profissional: ")
+        Service.horario_inserir(data, confirmado, id_cliente, id_servico, id_profissional)
+    @staticmethod
+    def horario_listar():
+        for obj in Service.horario_listar(): print(obj)
+    @staticmethod
+    def horario_atualizar():
+        for obj in Service.horario_atualizar(): print(obj)
+        id = int(input("Informa o novo id: "))
+        data = input("Informe a nova data: ")
+        confirmado = input("Confirmado: ")
+        id_cliente = input("Informe o novo id do cliente: ")
+        id_servico = input("Informe o novo id do serviço: ")
+        id_profissional = input("Informe o novo id do profissional: ")
+        Service.horario_atualizar(id, data, confirmado, id_cliente, id_servico, id_profissional)
+    @staticmethod
+    def horario_excluir(id):
+        for obj in Service.horario_excluir(): print(obj)
+        id = int(input("Informe o id do horário a ser excluído: "))
+        Service.horario_excluir(id)
 
 UI.main()
