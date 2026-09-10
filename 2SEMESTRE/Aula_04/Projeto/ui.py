@@ -4,7 +4,7 @@ class UI:
     @staticmethod
     def main():
         op = 0
-        while op != 9:
+        while op != 20:
             op = UI.menu()
             if op == 1: UI.cliente_inserir()
             if op == 2: UI.cliente_listar()
@@ -19,9 +19,12 @@ class UI:
             if op == 11: UI.horario_excluir()
             if op == 12: UI.profissional_inserir()
             if op == 13: UI.profissional_listar()
-            if op == 14: UI.profissional_listar_id()
-            if op == 15: UI.profissional_atualizar()
-            if op == 16: UI.profissional.excluir()
+            if op == 14: UI.profissional_atualizar()
+            if op == 15: UI.profissional_excluir()
+            if op == 16: UI.atendimento_inserir()
+            if op == 17: UI.atendimento_listar()
+            if op == 18: UI.atendimento_atualizar()
+            if op == 19: UI.atendimento_excluir()
 
 
     @staticmethod
@@ -34,7 +37,9 @@ class UI:
         print("9-Listar , 10-Atualizar, 11-Excluir")
         print("Profissionais ----------------------------------")
         print("12-Inserir, 13-Listar, 14-Atualizar, 15-Excluir")
-        print("16-Fim")
+        print("Atendimentos ----------------------------------")
+        print("16-Inserir, 17-Listar, 18-Atualizar, 19-Excluir")
+        print("20-Fim")
         return int(input("Informe uma opção: "))
 
     @staticmethod
@@ -115,5 +120,37 @@ class UI:
         for obj in Service.horario_excluir(): print(obj)
         id = int(input("Informe o id do horário a ser excluído: "))
         Service.horario_excluir(id)
+
+    @staticmethod
+    def profissional_inserir(id):
+        pass
+
+    @staticmethod
+    def profissional_listar(id):
+        pass
+
+    @staticmethod
+    def profissional_atualizar(id):
+        pass
+
+    @staticmethod
+    def profissional_excluir(id):
+        pass
+
+    @staticmethod
+    def atendimento_inserir(id):
+        pass
+
+    @staticmethod
+    def atendimento_listar(id):
+        pass
+
+    @staticmethod
+    def atendimento_atualizar(id):
+        pass
+
+    @staticmethod
+    def atendimento_excluir(id):
+        pass
 
 UI.main()
