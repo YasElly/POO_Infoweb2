@@ -4,7 +4,7 @@ class UI:
     @staticmethod
     def main():
         op = 0
-        while op != 9:
+        while op != 13:
             op = UI.menu()
             if op == 1: UI.cliente_inserir()
             if op == 2: UI.cliente_listar()
@@ -14,6 +14,10 @@ class UI:
             if op == 6: UI.servico_listar()
             if op == 7: UI.servico_atualizar()
             if op == 8: UI.servico_excluir()
+            if op == 9: UI.departamento_inserir()
+            if op == 10: UI.departamento_listar()
+            if op == 11: UI.departamento_atualizar()
+            if op == 12: UI.departamento_excluir()
 
     @staticmethod
     def menu():
@@ -21,8 +25,9 @@ class UI:
         print("1-Inserir, 2-Listar, 3-Atualizar, 4-Excluir")
         print("Serviços ----------------------------------")
         print("5-Inserir, 6-Listar, 7-Atualizar, 8-Excluir")
-        print("Outras opções -----------------------------")
-        print("9-Fim")
+        print("Departamentos -----------------------------")
+        print("9-Inserir, 10-Listar, 11-Atualizar, 12-Excluir")
+        print("13-Fim")
         return int(input("Informe uma opção: "))
 
     @staticmethod
@@ -77,4 +82,29 @@ class UI:
         id = int(input("Informe o id do serviço a ser excluído: "))
         Service.servico_excluir(id)
 
+    @staticmethod
+    def departamento_inserir():
+        nome = input("Informe o nome: ")
+        diretor = input("Informe o diretor: ")
+        fone = input("Informe o telefone: ")
+        Service.departamento_inserir(nome, diretor, fone)
+
+    @staticmethod
+    def departamento_listar():
+        for obj in Service.departamento_listar(): print(obj)
+
+    @staticmethod
+    def departamento_atualizar():
+        for obj in Service.departamento_listar(): print(obj)
+        id = int(input("Informe o id do departamento a ser atualizado: "))
+        nome = input("Informe o novo nome: ")
+        diretor = input("Informe o novo diretor: ")
+        fone = input("Informe o novo telefone: ")
+        Service.departamento_atualizar(id, nome, diretor, fone)
+
+    @staticmethod
+    def departamento_excluir():
+        for obj in Service.departamento_listar(): print(obj)
+        id = int(input("Informe o id do departamento a ser excluído: "))
+        Service.departamento_excluir(id)
 UI.main()
