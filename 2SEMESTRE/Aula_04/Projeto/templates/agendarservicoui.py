@@ -23,3 +23,4 @@ class AgendarServicoUI:
                     st.success("Horário agendado com sucesso")
                     time.sleep(2)
                     st.rerun()
+                    
