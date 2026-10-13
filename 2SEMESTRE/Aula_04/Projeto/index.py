@@ -32,7 +32,7 @@ class IndexUI:
     def menu_cliente():
         op = st.sidebar.selectbox(
             "Menu",
-            ["Meus Dados", "Agendar Serviço", "Meus Serviços"]
+            ["Meus Dados", "Agendar Serviço", "Meus Serviços", "Alterar Senha"]
         )
 
         if op == "Meus Dados":
@@ -44,6 +44,9 @@ class IndexUI:
         if op == "Meus Serviços":
             MeusServicosUI.main()
 
+        if op == "Alterar Senha":
+            AlterarSenhaUI.main()
+
     def menu_profissional():
         op = st.sidebar.selectbox(
             "Menu",
@@ -51,7 +54,8 @@ class IndexUI:
                 "Meus Dados",
                 "Abrir Minha Agenda",
                 "Minha Agenda",
-                "Confirmar Serviço"
+                "Confirmar Serviço",
+                "Alterar Senha"
             ]
         )
 
@@ -66,6 +70,9 @@ class IndexUI:
 
         if op == "Confirmar Serviço":
             ConfirmarServicoUI.main()
+
+        if op == "Alterar Senha":
+            AlterarSenhaUI.main()
 
     def menu_admin():
         op = st.sidebar.selectbox(

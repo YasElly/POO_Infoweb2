@@ -220,3 +220,16 @@ class Service:
             if c.get_email() == email and c.get_senha() == senha:
                 return {"id": c.get_id(), "nome": c.get_nome()}
         return None
+    
+    @staticmethod
+    def profissional_alterar_senha(id, senha):
+        obj = Service.profissional_listar_id(id)
+
+        if obj != None:
+            Service.profissional_atualizar(
+                id,
+                obj.get_nome(),
+                obj.get_email(),
+                obj.get_fone(),
+                senha
+            )
