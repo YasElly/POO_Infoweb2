@@ -12,17 +12,24 @@ from zoneinfo import ZoneInfo
 class Service:
     @staticmethod
     def _validar_email_unico(email, id_cliente=None, id_profissional=None):
-        if id_cliente is not None:
-            cliente_atual = Service.cliente_listar_id(id_cliente)
-            if cliente_atual != None:
-                if cliente_atual.get_email() == "admin" and email != "admin":
-                    raise ValueError("O e-mail do administrador não pode ser alterado")
 
+        # O e-mail admin é reservado para a conta administrativa.
+        if email == "admin":
+            if id_cliente == None:
+                raise ValueError("Esse e-mail é reservado para o administrador")
+
+            cliente_atual = Service.cliente_listar_id(id_cliente)
+
+            if cliente_atual == None or cliente_atual.get_email() != "admin":
+                raise ValueError("Esse e-mail é reservado para o administrador")
+
+        # Verificar se já existe outro cliente com o mesmo e-mail.
         for cliente in Service.cliente_listar():
             if cliente.get_id() != id_cliente:
                 if cliente.get_email() == email:
                     raise ValueError("E-mail já cadastrado para outro cliente")
 
+        # Verificar se já existe outro profissional com o mesmo e-mail.
         for profissional in Service.profissional_listar():
             if profissional.get_id() != id_profissional:
                 if profissional.get_email() == email:
@@ -61,7 +68,9 @@ class Service:
         for c in Service.cliente_listar():
             if c.get_email() == "admin":
                 return
-        Service.cliente_inserir("admin", "admin", "fone", "1234")
+
+        obj = Cliente(0, "admin", "admin", "fone", "1234")
+        ClienteDAO().inserir(obj)
 
     @staticmethod
     def cliente_autenticar(email, senha):
