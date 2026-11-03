@@ -13,7 +13,7 @@ from templates.meusservicosui import MeusServicosUI
 from templates.confirmarservicoui import ConfirmarServicoUI
 from templates.alterarsenhaui import AlterarSenhaUI
 from service import Service
-import streamlit as st
+import streamlit                                        as st
 
 class IndexUI:
 
