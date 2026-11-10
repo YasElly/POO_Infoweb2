@@ -12,5 +12,26 @@
     "email": "yas@gmail.com",
     "fone": "83999000",
     "senha": "IFRN*2026"
+  },
+  {
+    "id": 3,
+    "nome": "Juan",
+    "email": "juan@ssilva",
+    "fone": "123456789",
+    "senha": "Juan"
+  },
+  {
+    "id": 4,
+    "nome": "Talia",
+    "email": "talia@aapaza",
+    "fone": "987654321",
+    "senha": "Talia"
+  },
+  {
+    "id": 5,
+    "nome": "Yasmim",
+    "email": "yasmim@ffelix",
+    "fone": "10101010",
+    "senha": "Yasmim"
   }
 ]

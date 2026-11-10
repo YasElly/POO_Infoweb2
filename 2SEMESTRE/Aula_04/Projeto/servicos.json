@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "descricao": "Exame de Pr\u00f3stata",
+    "valor": 70.0
+  },
+  {
+    "id": 2,
+    "descricao": "Consulta Ginecol\u00f3gica",
+    "valor": 150.0
+  }
+]
