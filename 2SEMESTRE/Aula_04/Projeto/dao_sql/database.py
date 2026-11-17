@@ -1,18 +1,15 @@
 import sqlite3
-
 class Database:
     conn = None
-    nome_bd="agenda.db"
+    nome_bd = 'agenda.bd'
 
     @classmethod
     def abrir(cls):
         cls.conn = sqlite3.connect(cls.nome_bd)
-        cls.conn.execute("PRAGMA foreign_keys = ON")
- 
+        cls.conn.execute(('PRAGMA foreign_keys = ON'))
     @classmethod
     def fechar(cls):
         cls.conn.close()
-
     @classmethod
     def execute(cls, sql, params = None):
         cursor = cls.conn.cursor()
@@ -22,7 +19,7 @@ class Database:
     @classmethod
     def criar_tabelas(cls):
         # --------------------- Tabela Cliente ---------------------
-        cls.execute("""
+        cls.execute('''
             CREATE TABLE IF NOT EXISTS cliente (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 nome TEXT NOT NULL,
@@ -30,10 +27,9 @@ class Database:
                 fone TEXT,
                 senha TEXT NOT NULL
             );
-        """)
+        ''')
 
-        # --------------------- Tabela Profissional ---------------------
-        cls.execute("""
+        cls.execute('''
             CREATE TABLE IF NOT EXISTS profissional (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 nome TEXT NOT NULL,
@@ -41,19 +37,19 @@ class Database:
                 especialidade TEXT NULL,
                 senha TEXT NOT NULL
             );
-        """)
+        ''')
 
         # --------------------- Tabela Servico ---------------------
-        cls.execute("""
+        cls.execute('''
             CREATE TABLE IF NOT EXISTS servico (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 descricao TEXT NOT NULL,
                 valor REAL NOT NULL
             );
-        """)
+        ''')
 
         # --------------------- Tabela Horario ---------------------
-        cls.execute("""
+        cls.execute('''
             CREATE TABLE IF NOT EXISTS horario (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 data TEXT NOT NULL,
@@ -66,10 +62,10 @@ class Database:
                 FOREIGN KEY (id_servico) REFERENCES servico(id) ON DELETE CASCADE,
                 FOREIGN KEY (id_profissional) REFERENCES profissional(id) ON DELETE CASCADE
             );
-        """)
+        ''')
 
         # --------------------- Tabela Atendimento ---------------------
-        cls.execute("""
+        cls.execute('''
             CREATE TABLE IF NOT EXISTS atendimento (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 data TEXT NOT NULL,
@@ -81,9 +77,9 @@ class Database:
 
                 FOREIGN KEY (id_horario) REFERENCES horario(id) ON DELETE CASCADE
             );
-        """)
+        ''')
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     Database.abrir()
     Database.criar_tabelas()
     Database.fechar()
