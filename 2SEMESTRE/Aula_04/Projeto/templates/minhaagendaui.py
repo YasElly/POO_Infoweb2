@@ -1,45 +1,22 @@
 import streamlit as st
-import pandas as pd
 from service import Service
+import time
 
-class MinhaAgendaUI:
+class PerfilClienteUI:
     def main():
-        st.header("Minha Agenda")
-
-        # Busca somente os horários do profissional que está logado.
-        horarios = Service.horario_listar_profissional(
-            st.session_state["usuario_id"]
-        )
-
-        if len(horarios) == 0:
-            st.write("Nenhum horário cadastrado")
-
-        else:
-            dic = []
-
-            for obj in horarios:
-                cliente = Service.cliente_listar_id(
-                    obj.get_id_cliente()
-                )
-
-                servico = Service.servico_listar_id(
-                    obj.get_id_servico()
-                )
-
-                if cliente != None:
-                    cliente = cliente.get_nome()
-
-                if servico != None:
-                    servico = servico.get_descricao()
-
-                dic.append({
-                    "id": obj.get_id(),
-                    "data": obj.get_data(),
-                    "confirmado": obj.get_confirmado(),
-                    "cliente": cliente,
-                    "serviço": servico
-                })
-
-            df = pd.DataFrame(dic)
-
-            st.dataframe(df)
+        st.header("Meus Dados")
+        op = Service.cliente_listar_id(st.session_state["usuario_id"])
+        nome = st.text_input("Informe o novo nome", op.get_nome())
+        email = st.text_input("Informe o novo e-mail", op.get_email())
+        fone = st.text_input("Informe o novo fone", op.get_fone())
+        senha = st.text_input("Informe a nova senha", op.get_senha(), type="password")
+        if st.button("Atualizar"):
+            try:
+                id = op.get_id()
+                Service.cliente_atualizar(id, nome, email, fone, senha)
+                st.success("Cliente atualizado com sucesso")
+                time.sleep(2)
+                st.rerun()
+            except ValueError as erro:
+                st.error(str(erro))
+                        

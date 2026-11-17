@@ -1,135 +1,71 @@
 import streamlit as st
 import pandas as pd
-from service import Service
 import time
-from datetime import datetime
+from service import Service
 
-class ManterHorarioUI:
+class ManterProfissionalUI:
     def main():
-        st.header("Cadastro de Horários")
+        st.header("Cadastro de Profissionais")
         tab1, tab2, tab3, tab4 = st.tabs(["Listar", "Inserir", "Atualizar", "Excluir"])
-        with tab1: ManterHorarioUI.listar()
-        with tab2: ManterHorarioUI.inserir()
-        with tab3: ManterHorarioUI.atualizar()
-        with tab4: ManterHorarioUI.excluir()
+        with tab1: ManterProfissionalUI.listar()
+        with tab2: ManterProfissionalUI.inserir()
+        with tab3: ManterProfissionalUI.atualizar()
+        with tab4: ManterProfissionalUI.excluir()
 
     def listar():
-        horarios = Service.horario_listar()
-        if len(horarios) == 0: st.write("Nenhum horário cadastrado")
+        profissionais = Service.profissional_listar()
+        if len(profissionais) == 0: st.write("Nenhum profissional cadastrado")
         else:
-            dic = []
-            for obj in horarios:
-                cliente = Service.cliente_listar_id(obj.get_id_cliente())
-                servico = Service.servico_listar_id(obj.get_id_servico())
-                profissional = Service.profissional_listar_id(obj.get_id_profissional())
-                if cliente != None: cliente = cliente.get_nome()
-                if servico != None: servico = servico.get_descricao()
-                if profissional != None: profissional = profissional.get_nome()
-                dic.append({"id" : obj.get_id(), "data" : obj.get_data(),
-                "confirmado" : obj.get_confirmado(), "cliente" : cliente,
-                "serviço" : servico, "profissional" : profissional})
-            df = pd.DataFrame(dic)
+            list_dic = []
+            for obj in profissionais: list_dic.append(obj.to_dict())
+            df = pd.DataFrame(list_dic)
             st.dataframe(df)
 
     def inserir():
-        clientes = Service.cliente_listar()
-        servicos = Service.servico_listar()
-        profissionais = Service.profissional_listar()
-        data = st.text_input("Informe a data e horário do serviço", datetime.now().strftime("%d/%m/%Y %H:%M"))
-        confirmado = st.checkbox("Confirmado")
-        cliente = st.selectbox("Informe o cliente", clientes, index = None)
-        servico = st.selectbox("Informe o serviço", servicos, index = None)
-        profissional = st.selectbox("Informe o profissional", profissionais, index = None)
+        nome = st.text_input("Informe o nome")
+        email = st.text_input("Informe o e-mail")
+        especialidade = st.text_input("Informe a especialidade")
+        senha = st.text_input("Informe a senha", type="password")
         if st.button("Inserir"):
             try:
-                id_cliente = None
-                id_servico = None
-                id_profissional = None
-
-                if cliente != None:
-                    id_cliente = cliente.get_id()
-
-                if servico != None:
-                    id_servico = servico.get_id()
-
-                if profissional != None:
-                    id_profissional = profissional.get_id()
-
-                Service.horario_inserir(
-                    datetime.strptime(data, "%d/%m/%Y %H:%M"),
-                    confirmado,
-                    id_cliente,
-                    id_servico,
-                    id_profissional
-                )
-
-                st.success("Horário inserido com sucesso")
+                Service.profissional_inserir(nome, email, especialidade, senha)
+                st.success("Profissional inserido com sucesso")
                 time.sleep(2)
                 st.rerun()
-
-            except ValueError as e:
-                st.error(str(e))
+            except ValueError as erro:
+                st.error(str(erro))
 
     def atualizar():
-        horarios = Service.horario_listar()
-        if len(horarios) == 0: st.write("Nenhum horário cadastrado")
+        profissionais = Service.profissional_listar()
+        if len(profissionais) == 0: st.write("Nenhum profissional cadastrado")
         else:
-            clientes = Service.cliente_listar()
-            servicos = Service.servico_listar()
-            profissionais = Service.profissional_listar()
-            op = st.selectbox("Atualização de Horários", horarios)
-            data = st.text_input("Informe a nova data e horário do serviço", op.get_data().strftime("%d/%m/%Y %H:%M"))
-            confirmado = st.checkbox("Nova confirmação", op.get_confirmado())
-            id_cliente = None if op.get_id_cliente() in [0, None] else op.get_id_cliente()
-            id_servico = None if op.get_id_servico() in [0, None] else op.get_id_servico()
-            id_profissional = None if op.get_id_profissional() in [0, None] else op.get_id_profissional()
-            cliente = st.selectbox("Informe o novo cliente", clientes, next((i for i, c in enumerate(clientes) if c.get_id() == id_cliente), None))
-            servico = st.selectbox("Informe o novo serviço", servicos, next((i for i, s in enumerate(servicos) if s.get_id() == id_servico), None))
-            profissional = st.selectbox("Informe o novo profissional", profissionais,\
-                           next((i for i, s in enumerate(profissionais) if s.get_id() == id_profissional), None))
+            op = st.selectbox("Atualização de Profissionais", profissionais)
+            nome = st.text_input("Informe o novo nome", op.get_nome())
+            email = st.text_input("Informe o novo email", op.get_email())
+            especialidade = st.text_input("Informe a nova especialidade", op.get_especialidade())
+            senha = st.text_input("Nova senha", op.get_senha(), type="password")
+
             if st.button("Atualizar"):
                 try:
-                    id_cliente = None
-                    id_servico = None
-                    id_profissional = None
-
-                    if cliente != None:
-                        id_cliente = cliente.get_id()
-
-                    if servico != None:
-                        id_servico = servico.get_id()
-
-                    if profissional != None:
-                        id_profissional = profissional.get_id()
-
-                    Service.horario_atualizar(
-                        op.get_id(),
-                        datetime.strptime(data, "%d/%m/%Y %H:%M"),
-                        confirmado,
-                        id_cliente,
-                        id_servico,
-                        id_profissional
-                    )
-
-                    st.success("Horário atualizado com sucesso")
+                    id = op.get_id()
+                    Service.profissional_atualizar(id, nome, email, especialidade, senha)
+                    st.success("Profissional atualizado com sucesso")
                     time.sleep(2)
                     st.rerun()
+                except ValueError as erro:
+                    st.error(str(erro))
 
-                except ValueError as e:
-                    st.error(str(e))
     def excluir():
-        horarios = Service.horario_listar()
-        if len(horarios) == 0: st.write("Nenhum horário cadastrado")
+        profissionais = Service.profissional_listar()
+        if len(profissionais) == 0: st.write("Nenhum profissional cadastrado")
         else:
-            op = st.selectbox("Exclusão de Horários", horarios)
+            op = st.selectbox("Exclusão de Profissionais", profissionais)
             if st.button("Excluir"):
                 try:
-                    Service.horario_excluir(op.get_id())
-
-                    st.success("Horário excluído com sucesso")
+                    id = op.get_id()
+                    Service.profissional_excluir(id)
+                    st.success("Profissional excluído com sucesso")
                     time.sleep(2)
                     st.rerun()
-
-                except ValueError as e:
-                    st.error(str(e))
-                
+                except ValueError as erro:
+                    st.error(str(erro))

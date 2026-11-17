@@ -41,6 +41,11 @@ class AbrirMinhaAgendaUI:
                     "%d/%m/%Y %H:%M"
                 )
 
+            except ValueError:
+                st.error("Informe a data e os horários no formato indicado")
+                return
+
+            try:
                 quantidade = Service.horario_abrir_agenda(
                     inicio,
                     fim,
@@ -49,11 +54,11 @@ class AbrirMinhaAgendaUI:
                 )
 
                 st.success(
-                    f"Agenda aberta com sucesso! {quantidade} horários criados."
+                    f"Agenda aberta com sucesso! {quantidade} horários cadastrados."
                 )
 
                 time.sleep(2)
                 st.rerun()
 
-            except ValueError as e:
-                st.error(str(e))
+            except ValueError as erro:
+                st.error(str(erro))
