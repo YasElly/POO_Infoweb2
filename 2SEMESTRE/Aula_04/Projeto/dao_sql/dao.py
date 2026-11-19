@@ -5,20 +5,22 @@ from pathlib import Path
 class DAO(ABC):
     
     def __init__(self):
-        self.conn = None
-        self.nome_bd = str(Path(__file__).resolve().parent.parent / "agenda.db")
+        self._conn = None
+        self._nome_bd = str(Path(__file__).resolve().parent.parent / "agenda.db")
 
-    def abrir(self):
-        self.conn = sqlite3.connect(self.nome_bd)
-        self.conn.execute("PRAGMA foreign_keys = ON")
+    def _abrir(self):
+        self._conn = sqlite3.connect(self.nome_bd)
+        self._conn.execute("PRAGMA foreign_keys = ON")
  
-    def fechar(self):
-        self.conn.close()
+    def _fechar(self):
+        if self._conn != None:
+            self._conn.close()
+            self._conn = None
        
-    def execute(self, sql, params = None):
-        cursor = self.conn.cursor()
+    def _execute(self, sql, params = None):
+        cursor = self._conn.cursor()
         cursor.execute(sql, params or [])
-        self.conn.commit()
+        self._conn.commit()
         return cursor
 
     @abstractmethod
