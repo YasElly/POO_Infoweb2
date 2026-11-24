@@ -8,16 +8,16 @@ class DAO(ABC):
         self._conn = None
         self._nome_bd = str(Path(__file__).resolve().parent.parent / "agenda.db")
 
-    def _abrir(self):
-        self._conn = sqlite3.connect(self.nome_bd)
+    def abrir(self):
+        self._conn = sqlite3.connect(self._nome_bd)
         self._conn.execute("PRAGMA foreign_keys = ON")
  
-    def _fechar(self):
+    def fechar(self):
         if self._conn != None:
             self._conn.close()
             self._conn = None
        
-    def _execute(self, sql, params = None):
+    def execute(self, sql, params = None):
         cursor = self._conn.cursor()
         cursor.execute(sql, params or [])
         self._conn.commit()
