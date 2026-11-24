@@ -31,8 +31,8 @@ class Service:
                     raise ValueError("E-mail já cadastrado para outro profissional")
 
     @staticmethod
-    def cliente_inserir(nome, email, fone, senha):
-        obj = Cliente(0, nome, email, fone, senha)
+    def cliente_inserir(nome, email, fone, senha, foto=None):
+        obj = Cliente(0, nome, email, fone, senha, foto)
         Service._validar_email_unico(obj.get_email())
         ClienteDAO().inserir(obj)
 
@@ -47,8 +47,8 @@ class Service:
         return ClienteDAO().listar_id(id)
 
     @staticmethod
-    def cliente_atualizar(id, nome, email, fone, senha):
-        obj = Cliente(id, nome, email, fone, senha)
+    def cliente_atualizar(id, nome, email, fone, senha, foto=None):
+        obj = Cliente(id, nome, email, fone, senha, foto)
         Service._validar_email_unico(obj.get_email(), id_cliente=id)
         ClienteDAO().atualizar(obj)
 
@@ -57,6 +57,14 @@ class Service:
         horarios = Service.horario_listar_cliente(id)
         if len(horarios) > 0: raise ValueError("Não é possível excluir um cliente com horário agendado")
         ClienteDAO().excluir(id)
+
+    @staticmethod
+    def cliente_atualizar_foto(id, foto):
+        cliente = Service.cliente_listar_id(id)
+        if cliente is None:
+            raise ValueError("Cliente não encontrado.")
+        cliente.set_foto(foto)
+        ClienteDAO().atualizar(cliente)
 
     @staticmethod
     def cliente_criar_admin():
@@ -283,8 +291,8 @@ class Service:
 
 
     @staticmethod
-    def profissional_inserir(nome, email, especialidade, senha):
-        obj = Profissional(0, nome, email, especialidade, senha)
+    def profissional_inserir(nome, email, especialidade, senha, foto=None):
+        obj = Profissional(0, nome, email, especialidade, senha, foto)
         Service._validar_email_unico(obj.get_email())
         ProfissionalDAO().inserir(obj)
 
@@ -299,10 +307,18 @@ class Service:
         return ProfissionalDAO().listar_id(id)
 
     @staticmethod
-    def profissional_atualizar(id, nome, email, especialidade, senha):
-        obj = Profissional(id, nome, email, especialidade, senha)
+    def profissional_atualizar(id, nome, email, especialidade, senha, foto=None):
+        obj = Profissional(id, nome, email, especialidade, senha, foto)
         Service._validar_email_unico(obj.get_email(),id_profissional=id)
         ProfissionalDAO().atualizar(obj)
+
+    @staticmethod
+    def profissional_atualizar_foto(id, foto):
+        profissional = Service.profissional_listar_id(id)
+        if profissional is None:
+            raise ValueError("Profissional não encontrado.")
+        profissional.set_foto(foto)
+        ProfissionalDAO().atualizar(profissional)
 
     @staticmethod
     def profissional_excluir(id):

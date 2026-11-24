@@ -24,9 +24,15 @@ class ManterClienteUI:
         email = st.text_input("Informe o e-mail")
         fone = st.text_input("Informe o fone")
         senha = st.text_input("Informe a senha", type="password")
+        foto = st.file_uploader("ESCOLHA A FOTO DO CLIENTE",
+            type=["jpg", "jpeg", "png"],
+            key="foto_cliente_novo")
+        if foto:
+            st.image(foto, width=150)
         if st.button("Inserir"):
             try:
-                Service.cliente_inserir(nome, email, fone, senha)
+                imagem = foto.getvalue() if foto else None
+                Service.cliente_inserir(nome, email, fone, senha, imagem)
                 st.success("Cliente inserido com sucesso")
                 time.sleep(2)
                 st.rerun()
@@ -41,10 +47,24 @@ class ManterClienteUI:
             email = st.text_input("Novo e-mail", op.get_email())
             fone = st.text_input("Novo fone", op.get_fone())
             senha = st.text_input("Nova senha", op.get_senha(), type="password")
+            foto = st.file_uploader("ESCOLHA UMA NOVA FOTO",
+            type=["jpg", "jpeg", "png"],
+            key="foto_cliente_atualizar")
+            if foto:
+                st.image(foto, width=150)
+            elif op.get_foto():
+                if op.get_foto():
+                    st.write("Nome:", op.get_nome())
+                    st.write("E-mail:", op.get_email())
+                    st.write("Senha:", op.get_senha())
+                    st.write("Foto:", op.get_foto())
+                else:
+                    st.write("Nenhuma foto cadastrada.")
             if st.button("Atualizar"):
                 try:
+                    imagem = foto.getvalue() if foto else None
                     id = op.get_id()
-                    Service.cliente_atualizar(id, nome, email, fone, senha)
+                    Service.cliente_atualizar(id, nome, email, fone, senha, imagem)
                     st.success("Cliente atualizado com sucesso")
                     time.sleep(2)
                     st.rerun()
