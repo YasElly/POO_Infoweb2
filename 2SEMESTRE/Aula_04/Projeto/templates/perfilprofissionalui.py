@@ -10,7 +10,7 @@ class PerfilProfissionalUI:
         email = st.text_input("Informe o novo e-mail", op.get_email())
         especialidade = st.text_input("Informe a nova especialidade", op.get_especialidade())
         senha = st.text_input("Informe a nova senha", op.get_senha(), type="password")
-        foto = st.file_uploader("ESCOLHA UMA NOVA FOTO",op.get_foto(), type=["jpg", "jpeg", "png"], key="foto_profissional_novo" )
+        foto = st.file_uploader("ESCOLHA UMA NOVA FOTO", type=["jpg", "jpeg", "png"], key="foto_profissional_novo" )
         if st.button("Atualizar"):
             try:
                 imagem = foto.getvalue() if foto else None

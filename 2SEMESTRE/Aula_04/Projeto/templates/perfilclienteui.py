@@ -10,7 +10,7 @@ class PerfilClienteUI:
         email = st.text_input("Informe o novo e-mail", op.get_email())
         fone = st.text_input("Informe o novo fone", op.get_fone())
         senha = st.text_input("Informe a nova senha", op.get_senha(), type="password")
-        foto = st.file_uploader("ESCOLHA UMA NOVA FOTO", op.get_foto(), type=["jpg", "jpeg", "png"], key="foto_cliente_atualizar")
+        foto = st.file_uploader("ESCOLHA UMA NOVA FOTO", type=["jpg", "jpeg", "png"], key="foto_cliente_atualizar")
         if st.button("Atualizar"):
             try:
                 imagem = foto.getvalue() if foto else None

@@ -3,7 +3,7 @@ from pathlib import Path
 
 class Database:
     conn = None
-    nome_bd = str(Path(__file__).resolve().parent.parent / "agenda.db")
+    nome_bd =  "agenda.db"
 
     @classmethod
     def abrir(cls):
@@ -37,7 +37,8 @@ class Database:
                 nome TEXT NOT NULL,
                 email TEXT NOT NULL,
                 fone TEXT,
-                senha TEXT NOT NULL
+                senha TEXT NOT NULL,
+                foto  BLOB
             );
         """)
 
@@ -48,7 +49,8 @@ class Database:
                 nome TEXT NOT NULL,
                 email TEXT NOT NULL,
                 especialidade TEXT NULL,
-                senha TEXT NOT NULL
+                senha TEXT NOT NULL,
+                foto  BLOB
             );
         """)
 
